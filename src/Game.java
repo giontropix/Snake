@@ -30,15 +30,6 @@ public class Game {
         return (i < grid.length) && (j < grid[0].length) && ((i >= 0) && (j >= 0));
     }
 
-    public void checkSnake(){
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if(grid[i][j].getType() == Snake.Type.Snake)
-                    Coords.add(i, j);
-            }
-        }
-    }
-
     public void moveSnake(int row, int column){
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -52,17 +43,13 @@ public class Game {
                         if (this.grid[i + row][j + column].getType() == Snake.Type.Mouse) {
                             this.grid[i + row][j + column].setType(Snake.Type.Snake);
                             this.grid[i][j].setType(Snake.Type.Snake);
+                            insert(Snake.Type.Mouse);
                             return;
                         }
                     }
                 }
             }
         }
-    }
-
-    public void eating(int row, int column, int rowBack, int columnBack){
-        if(grid[row][column].getType() == Snake.Type.Mouse)
-            grid[rowBack][columnBack].setType(Snake.Type.Snake);
     }
 
     public String toString() {
