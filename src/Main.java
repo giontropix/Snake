@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Game g = new Game(4,4);
-        System.out.println(g.toString());
+    public static void main(String[] args) throws Exception {
+
+        SnakeGame g = new SnakeGame(6,6);
+        System.out.println(g);
         while (true){
             System.out.println("Premi 8 per andare sopra");
             System.out.println("Premi 4 per andare a sinistra");
@@ -12,16 +13,17 @@ public class Main {
             Scanner scan = new Scanner(System.in);
             int choice = scan.nextInt();
             switch (choice){
-                case 2: g.moveSnake(1,0);
+                case 2: g.move(SnakeGame.Move.BOTTOM);
                 break;
-                case 8: g.moveSnake(-1, 0);//ok
+                case 8: g.move(SnakeGame.Move.TOP);
                 break;
-                case 4: g.moveSnake(0, -1);//ok
+                case 4: g.move(SnakeGame.Move.LEFT);
                 break;
-                case 6: g.moveSnake(0, 1);//ok
+                case 6: g.move(SnakeGame.Move.RIGHT);
                 break;
             }
-            System.out.println(g.toString());
+            System.out.println(g);
         }
+
     }
 }
