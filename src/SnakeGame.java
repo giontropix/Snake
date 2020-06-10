@@ -20,16 +20,16 @@ public class SnakeGame {
         this.grid = new int[n][m];
         snake.add(new Coord(1, 1));
         snake.addFirst(new Coord(1, 2));
-        setApple();
+        generateApple();
     }
 
-    public void setApple(){
+    public void generateApple(){
         int x = ThreadLocalRandom.current().nextInt(n);
         int y = ThreadLocalRandom.current().nextInt(m);
         if(!this.snake.contains(new Coord(x, y)))
             grid[x][y] = 1;
         else
-            setApple();
+            generateApple();
     }
 
     public void eatApple(Coord coord){
@@ -38,7 +38,7 @@ public class SnakeGame {
                 if(grid[i][j] == 1 && coord.getX() == i && coord.getY() == j){
                     snake.addLast(new Coord(i, j));
                     grid[i][j] = 0;
-                    setApple();
+                    generateApple();
                 }
             }
         }
@@ -59,7 +59,7 @@ public class SnakeGame {
         Coord head = this.snake.getFirst();
         eatApple(head);
         if (m == Move.RIGHT) {
-            if (head.getY()+ 1 > this.m || this.snake.contains(new Coord(head.getX(), head.getY()+ 1))) {
+            if (head.getY()+ 1 > this.m - 1 || this.snake.contains(new Coord(head.getX(), head.getY()+ 1))) {
                 this.currentStatus = Status.LOSE;
                 return;
             }
@@ -80,7 +80,7 @@ public class SnakeGame {
             this.snake.addFirst(new Coord(head.getX() - 1, head.getY()));
             this.forbiddenMove = Move.BOTTOM;
         } else if (m == Move.BOTTOM) {
-            if (head.getX()+ 1 > this.n || this.snake.contains(new Coord(head.getX() + 1, head.getY()))) {
+            if (head.getX()+ 1 > this.n - 1 || this.snake.contains(new Coord(head.getX() + 1, head.getY()))) {
                 this.currentStatus = Status.LOSE;
                 return;
             }
@@ -95,15 +95,12 @@ public class SnakeGame {
         for (int x = 0; x < this.grid.length; x++) {
             result += "[";
             for (int y = 0; y <this.grid[x].length; y++) {
-                if (this.snake.contains(new Coord(x, y))) {
+                if (this.snake.contains(new Coord(x, y)))
                     result += "[\u001B[32mO\u001B[0m]";
-                }
                 else if (grid[x][y] == 1)
                     result += "[\u001B[31mO\u001B[0m]";
-                else {
+                else
                     result += "[ ]";
-                }
-
             }
             result += "]\n";
         }
