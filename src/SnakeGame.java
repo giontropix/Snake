@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class SnakeGame {
+public class SnakeGame extends Thread {
     enum Move {TOP, BOTTOM, LEFT, RIGHT}
     enum Status {IN_GAME, LOSE, WIN}
     int[][] grid;
@@ -10,6 +10,7 @@ public class SnakeGame {
     LinkedList<Coord> snake = new LinkedList<>();
     private final int m;
     private final int n;
+    private Move lastMove=Move.RIGHT;
 
     public SnakeGame(int n, int m) throws Exception {
         if (n < 5 || m < 5) {
@@ -21,6 +22,18 @@ public class SnakeGame {
         snake.add(new Coord(1, 1));
         snake.addFirst(new Coord(1, 2));
         generateApple();
+    }
+
+    @Override
+    public void run() {
+        try {
+            while(currentStatus==Status.IN_GAME){
+                Thread.sleep (1200);
+                this.move(this.lastMove);
+                System.out.println(this.toString());
+            }
+
+        } catch(Exception e){ }
     }
 
     public void generateApple(){
@@ -56,6 +69,7 @@ public class SnakeGame {
 
     public void move(Move m) {
         if (m == this.forbiddenMove) return;
+        this.lastMove = m;
         Coord head = this.snake.getFirst();
         eatApple(head);
         if (m == Move.RIGHT) {

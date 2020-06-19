@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         SnakeGame g = new SnakeGame(6,6);
+        g.start();
         System.out.println(g);
         do {
             System.out.println("Premi 8 per andare sopra");
