@@ -105,20 +105,20 @@ public class SnakeGame extends Thread {
     }
     
     public String toString() {
-        String result =  this.currentStatus + "\n";
+        StringBuilder result = new StringBuilder(this.currentStatus + "\n");
         for (int x = 0; x < this.grid.length; x++) {
-            result += "[";
+            result.append("[");
             for (int y = 0; y <this.grid[x].length; y++) {
                 if (this.snake.contains(new Coord(x, y)))
-                    result += "[\u001B[32mO\u001B[0m]";
+                    result.append("[\u001B[32mO\u001B[0m]");
                 else if (grid[x][y] == 1)
-                    result += "[\u001B[31mO\u001B[0m]";
+                    result.append("[\u001B[31mO\u001B[0m]");
                 else
-                    result += "[ ]";
+                    result.append("[ ]");
             }
-            result += "]\n";
+            result.append("]\n");
         }
-        return result;
+        return result.toString();
     }
 
 }
