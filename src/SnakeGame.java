@@ -8,6 +8,7 @@ public class SnakeGame extends Thread {
     private Move forbiddenMove = Move.LEFT;
     private Status currentStatus = Status.IN_GAME;
     LinkedList<Coord> snake = new LinkedList<>();
+    Coord fruit;
     private final int m;
     private final int n;
     private Move lastMove=Move.RIGHT;
@@ -22,6 +23,22 @@ public class SnakeGame extends Thread {
         snake.add(new Coord(1, 1));
         snake.addFirst(new Coord(1, 2));
         generateApple();
+    }
+
+    public Coord getFruit() {
+        return fruit;
+    }
+
+    public LinkedList<Coord> getSnake() {
+        return snake;
+    }
+
+    public void setSnake(LinkedList<Coord> snake) {
+        this.snake = snake;
+    }
+
+    public Move getLastMove() {
+        return lastMove;
     }
 
     @Override
@@ -39,7 +56,8 @@ public class SnakeGame extends Thread {
     public void generateApple(){
         int x = ThreadLocalRandom.current().nextInt(n);
         int y = ThreadLocalRandom.current().nextInt(m);
-        if(!this.snake.contains(new Coord(x, y)))
+        this.fruit = new Coord(x, y);
+        if(!this.snake.contains(fruit))
             grid[x][y] = 1;
         else
             generateApple();
